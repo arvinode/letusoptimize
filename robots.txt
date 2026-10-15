@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /dev/
+Disallow: /qa/
+
+Sitemap: https://letusoptimize.com/sitemap-index.xml
