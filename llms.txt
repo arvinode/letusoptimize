@@ -1,4 +1,4 @@
-# Nova Template
+# Let Us Optimize
 
 A business website template (Astro + Tailwind v4) for creative agencies, design studios and ambitious brands, with a modern design, dark mode, a component gallery and a blog.
 
