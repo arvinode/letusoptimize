@@ -70,28 +70,30 @@
   }
 
   function startAnimationLoop(instance) {
-    function raf(time) {
-      instance.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
+  function raf(time) {
+    // Stop if this instance has been replaced or destroyed.
+    if (instance !== currentLenis) return;
+
+    instance.raf(time);
     rafId = requestAnimationFrame(raf);
   }
+
+  rafId = requestAnimationFrame(raf);
+}
 
   function createLenis() {
     var instance = new Lenis({
       // lerp 0.1 instead of 0.08: less "rubber" and smearing at 60 Hz,
       // because the value catches up to the target faster and scroll does not lag behind the wheel.
-      lerp: 0.1,
-      duration: 1.2,
-      smoothWheel: true,
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      // 1.0 instead of 0.85: wheel deltas are not dampened, so motion does not
-      // feel "sticky" and Lenis does not have to chase endlessly.
-      wheelMultiplier: 1.0,
-      touchMultiplier: 0.7,
-      infinite: false,
-      anchors: false,
+      lerp: 0.12,
+duration: 1.0,
+smoothWheel: true,
+orientation: 'vertical',
+gestureOrientation: 'vertical',
+wheelMultiplier: 1.0,
+touchMultiplier: 1.0,
+infinite: false,
+anchors: false,
       // Elements with data-lenis-prevent (textarea, floating buttons) have their own scroll,
       // Lenis should not intercept them. Lenis 1.3.25 also supports this attribute
       // natively, the prevent function is an extra safeguard for descendants.
