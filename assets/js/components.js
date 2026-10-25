@@ -38,14 +38,7 @@
   }
 
   const arrowIcon = `
-    <svg class="button__icon"
-         xmlns="http://www.w3.org/2000/svg"
-         viewBox="0 0 12 12"
-         fill="currentColor"
-         aria-hidden="true">
-      <path d="M12 1C12 1.3 11.9 1.5 11.7 1.7l-10 10a.99.99 0 0 1-1.4-1.4l10-10a.99.99 0 0 1 1.7.7Z"/>
-      <path d="M12 1v9c0 .6-.4 1-1 1s-1-.4-1-1V3H2c-.6 0-1-.4-1-1s.4-1 1-1h9c.6 0 1 .4 1 1Z"/>
-    </svg>`;
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M12 1.00006C12 1.30006 11.9 1.50006 11.7 1.70006L1.7 11.7001C1.3 12.1001 0.700001 12.1001 0.300001 11.7001C-0.0999995 11.3001 -0.0999995 10.7001 0.3 10.3001L10.3 0.300061C10.7 -0.0999398 11.3 -0.0999398 11.7 0.300061C11.9 0.500061 12 0.700061 12 1.00006Z"></path><path d="M11.9999 1L11.9999 10C11.9999 10.6 11.5999 11 10.9999 11C10.3999 11 9.99991 10.6 9.99991 10L9.99991 2L1.99991 2C1.39991 2 0.999909 1.6 0.999909 1C0.999909 0.400001 1.39991 9.3619e-07 1.99991 9.09963e-07L10.9999 5.1656e-07C11.5999 4.90334e-07 11.9999 0.4 11.9999 1Z"></path></svg>`;
 
 
   function applyGlobalBusinessDetails() {
@@ -168,14 +161,14 @@
           <a href="#" data-luo-whatsapp
              data-luo-whatsapp
              target="_blank" rel="noopener noreferrer">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-5.3A8.5 8.5 0 1 1 21 11.5Z"
-                stroke="currentColor" stroke-width="1.7"
-                stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M8.5 8.3c.4 2.1 2.1 3.8 4.2 4.2l1-1 1.8.9v1.3c0 .5-.4.8-.9.8a8.3 8.3 0 0 1-7.1-7.1c0-.5.3-.9.8-.9h1.3l.9 1.8-1 1Z"
-                stroke="currentColor" stroke-width="1.4"
-                stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <svg viewBox="0 0 24 24" fill="none">
+                <path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3Z"
+                  stroke="currentColor" stroke-width="1.7"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 9.2c.5 2.4 2.4 4.3 4.8 4.8l1.2-1.2 2 1v1.5c0 .6-.5 1-1.1 1A10 10 0 0 1 7.7 8.1c0-.6.4-1.1 1-1.1h1.5l1 2-1.2 1.2Z"
+                  stroke="currentColor" stroke-width="1.4"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             <span>Chat on WhatsApp</span>
             <span aria-hidden="true">↗</span>
           </a>
@@ -370,43 +363,85 @@
   }
 
   
+
 function renderRating() {
   const configRating = config.rating;
+  if (!configRating) return;
+
+  // About section
   const card = document.querySelector(".about__rating");
 
-  if (!card || configRating.value == null) return;
+  if (card && configRating.value != null) {
+    const value = card.querySelector("[data-rating-value]");
+    const scale = card.querySelector(".about__rating-scale");
+    const label = card.querySelector(".about__rating-label");
+    const link = card.querySelector(".about__rating-link");
+    const stars = card.querySelector(".about__stars");
 
-  const value = card.querySelector("[data-rating-value]");
-  const scale = card.querySelector(".about__rating-scale");
-  const label = card.querySelector(".about__rating-label");
-  const link = card.querySelector(".about__rating-link");
-  const stars = card.querySelector(".about__stars");
+    if (value) value.textContent = Number(configRating.value).toFixed(1);
+    if (scale) scale.textContent = `/ ${configRating.scale}`;
+    if (label) {
+      label.textContent =
+        `${configRating.source || "Google"} rating · ${configRating.reviewCount} reviews`;
+    }
+    if (stars) stars.hidden = false;
 
-  value.textContent = Number(configRating.value).toFixed(1);
-  scale.textContent = `/ ${configRating.scale}`;
-  label.textContent =
-    `Google rating · ${configRating.reviewCount} reviews`;
-
-  stars.hidden = false;
-
-  if (configRating.reviewUrl) {
-    link.href = configRating.reviewUrl;
-    link.textContent = "Read Google reviews";
-  } else {
-    link.hidden = true;
+    if (link && configRating.reviewUrl) {
+      link.href = configRating.reviewUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.textContent = "Read Google reviews";
+      link.hidden = false;
+    } else if (link) {
+      link.hidden = true;
+    }
   }
 
-  
-document.querySelectorAll("[data-rating-summary]").forEach((element) => {
-  const count = configRating.reviewCount;
-  const source = configRating.source || "Google";
+  // Google Reviews section
+  document.querySelectorAll(".google-reviews__rating").forEach((section) => {
+    const score = section.querySelector("[data-google-rating]");
+    const count = section.querySelector("[data-google-review-count]");
+    const starRating = section.querySelector(".star-rating");
 
-  element.textContent = count
-    ? `${source} · ${count} reviews`
-    : `${source} rating`;
-});
+    if (score && configRating.value != null) {
+      score.textContent = Number(configRating.value).toFixed(1);
+    }
 
+    if (count) {
+      count.textContent = configRating.reviewCount ?? 0;
+    }
+
+    if (starRating && configRating.value != null) {
+      starRating.setAttribute(
+        "aria-label",
+        `${configRating.value} out of ${configRating.scale} stars`
+      );
+    }
+  });
+
+  // Google Reviews link
+  document.querySelectorAll("[data-google-review-link]").forEach((link) => {
+    if (configRating.reviewUrl) {
+      link.href = configRating.reviewUrl;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.hidden = false;
+    } else {
+      link.hidden = true;
+    }
+  });
+
+  // Any shared rating summary
+  document.querySelectorAll("[data-rating-summary]").forEach((element) => {
+    const count = configRating.reviewCount;
+    const source = configRating.source || "Google";
+
+    element.textContent = count
+      ? `${source} · ${count} reviews`
+      : `${source} rating`;
+  });
 }
+
 
 
   document.addEventListener("DOMContentLoaded", () => {

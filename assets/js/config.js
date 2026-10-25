@@ -51,8 +51,6 @@ rating: {
     defaultDescription: "Simple, affordable web solutions for micro and small businesses. Explore website creation, maintenance, technical SEO, hosting setup and custom web apps.",
     language: "en",
     themeColor: "#111110",
-    fontStylesheet: "https://api.fontshare.com/v2/css?f[]=satoshi@400,500,600,700&display=swap",
-    fontOrigin: "https://api.fontshare.com",
     tracking: {
       // Add approved analytics IDs here when ready. Empty values do not load trackers.
       ga4MeasurementId: "G-1BFCTZZ7MF",
@@ -63,15 +61,15 @@ rating: {
   metrics: [
     {
       value: "250+",
-      label: "Projects delivered"
+      label: "Websites Optimized"
     },
     {
       value: "50+",
-      label: "Clients globally"
+      label: "Happy clients globally"
     },
     {
       value: "150+",
-      label: "Websites migrated & managed"
+      label: "Successful migration"
     }
   ]
 });

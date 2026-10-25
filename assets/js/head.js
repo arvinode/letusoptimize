@@ -17,10 +17,7 @@
     Object.entries(extra).forEach(([key, value]) => link.setAttribute(key, value));
     document.head.appendChild(link);
   };
-  addLink("icon", config.assets.favicon || "/favicon.ico");
-  addLink("preconnect", config.site.fontOrigin, { crossorigin: "" });
-  addLink("stylesheet", config.site.fontStylesheet);
-  addLink("stylesheet", "assets/css/global.css");
+  addLink("icon", config.assets.favicon || "favicon.ico");
   const theme = document.querySelector('meta[name="theme-color"]') || document.createElement("meta");
   theme.name = "theme-color";
   theme.content = config.site.themeColor || "#111110";
