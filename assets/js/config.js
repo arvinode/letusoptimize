@@ -36,7 +36,7 @@ rating: {
   value: 5.0,
   scale: 5,
   source: "Google",
-  reviewCount: 7,
+  reviewCount: 9,
   reviewUrl: "https://maps.app.goo.gl/aXfj8qdzeSNrpqbK9"
 },
 
